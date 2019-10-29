@@ -1,0 +1,19 @@
+.display-exit-active {
+  transform: scale(0);
+  opacity: 0;
+  transition: all 0.5s ease-out;
+  background: #ffa500;
+  pointer-events: none;
+}
+
+.display-enter {
+  transform: scale(0.3);
+  opacity: 0;
+}
+
+.display-enter-active {
+  transform: scale(1);
+  opacity: 1;
+  transition: all 0.5s ease-out;
+  pointer-events: none;
+}

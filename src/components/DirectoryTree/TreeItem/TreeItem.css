@@ -1,0 +1,30 @@
+.toggle-icon {
+    display: inline; 
+}
+
+.toggle-icon-invisible {
+    visibility: hidden;
+}
+
+.file-symbol {
+    cursor: pointer;
+    display: inline;
+    margin-left: 20px;
+}
+
+.file-symbol:hover {
+    color: #FA5B3D;
+}
+
+.disable {
+    color: #AFB6BC;
+    pointer-events: none;
+}
+
+.tree-item-icon {
+    display: inline-block;
+    padding: 0 5px;
+
+}
+
+

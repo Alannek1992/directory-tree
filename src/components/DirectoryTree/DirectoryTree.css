@@ -1,0 +1,80 @@
+div[tabindex="0"]:focus {
+    outline: none;
+}
+
+.directory-tree-col {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.directory-tree {
+    width: 100%;
+    padding: 20px;
+    height: 80vh;
+    overflow: auto;
+    background-color: white;
+    border: 2px solid #ffa500 ;
+    border-radius: 5px;
+}
+
+.toggle-icon {
+  display: inline-block;
+}
+.toggle-icon-symbol {
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.toggle-icon-symbol span {
+  font-size: 20px;
+}
+
+.toggle-icon-symbol:hover {
+  color: #FA5B3D;
+}
+
+.tree-item-icon {
+  margin-left: 15px;
+  display: inline;
+  
+}
+
+.tree-item-group {
+  list-style-type: none;
+  padding-left: 0;
+  border-top: 1px solid #ccc;
+  overflow: scroll;
+}
+
+.tree-list {
+    list-style: none;
+}
+
+.tree-item {
+  padding: 0.75rem 1rem;
+  color: black;
+  background: none;
+  border-bottom: 1px solid #ffa500;
+  box-shadow: none;
+  z-index: unset;
+  position: relative;
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer */
+  -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+  -webkit-user-select: none; /* Chrome, Safari, and Opera */
+  -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+}
+.tree-item--active {
+  color: white;
+  background: #FA5B3D;
+  border-bottom: none;
+}
+.tree-item--focused {
+  box-shadow: 0 0 5px 0 #222;
+  z-index: 999;
+}
+
+
