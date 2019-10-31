@@ -68,3 +68,7 @@ export enum SlideDirection {
   LEFT = "LEFT",
   RIGHT = "RIGHT"
 }
+
+export interface IObjectWithProperties<T> {
+  [key: string] : T;
+}

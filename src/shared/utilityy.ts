@@ -25,11 +25,9 @@ export const scrollLeft = (element: any, change: any, duration: any) => {
     }
   };
   animateScroll();
-}
+};
 
-  export const isOverflown: (element: HTMLElement) => boolean = ({
-    clientWidth,
-    scrollWidth
-  }) => {
-    return scrollWidth > clientWidth;
-  };
+export const isOverflown: <T extends HTMLElement>(
+  element: T | null
+) => boolean = element =>
+  element ? element.scrollWidth > element.clientWidth : false;

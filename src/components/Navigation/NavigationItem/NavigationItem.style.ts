@@ -4,17 +4,19 @@ interface INavigationItemProps {
   active?: boolean;
 }
 
-const NavigationItem = styled.div<INavigationItemProps>`
+const NavigationItem = styled.li<INavigationItemProps>`
   margin: 0 5px;
   box-sizing: border-box;
   display: flex;
+  justify-content: space-between;
   height: 80%;
   border: 2px solid #ffa500;
   border-radius: 5px;
   background-color: white;
   color: black;
-  position: relative;
   min-width: 140px;
+  max-width: 140px;
+  align-items: center;
 
   ${props =>
     props.active &&
@@ -31,24 +33,6 @@ const NavigationItem = styled.div<INavigationItemProps>`
   }
 `;
 
-const NavigationItemText = styled.span<INavigationItemProps>`
-  text-decoration: none;
-  width: 100%;
-  box-sizing: border-box;
-  display: block;
-  margin: 8px;
-`;
-
-const NavigationItemIconClose = styled.div<INavigationItemProps>`
-  height: 15px;
-  margin: 8px;
-  :hover {
-    color: #ffa500;
-  }
-`;
-
 export const Styled = {
-  NavigationItem,
-  NavigationItemText,
-  NavigationItemIconClose
+  NavigationItem
 };

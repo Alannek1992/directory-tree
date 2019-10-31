@@ -69,7 +69,7 @@ const DirectoryTree: React.FC<DirectoryTreeProps> = ({
 
   useEffect(() => {
     initDirectoryTree();
-  }, []);
+  }, [initDirectoryTree]);
 
   useEffect(() => {
     if (
@@ -88,6 +88,7 @@ const DirectoryTree: React.FC<DirectoryTreeProps> = ({
       openNodes.current.reset(transformIntoTreeForm(treeData));
     }
   }, [treeData]);
+
 
   const initNodeHandler = (parentId: string) => {
     loadNewNode(parentId);

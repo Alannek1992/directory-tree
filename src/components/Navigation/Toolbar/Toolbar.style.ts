@@ -18,12 +18,16 @@ const Toolbar = styled.header`
 `;
 
 const ToolbarNav = styled.nav`
-  width: 100%;
-  display: flex;
-  flex-wrap: nowrap;
-  margin: 0 10px;
-  align-items: center;
-  height: 100%;
+  display: none;
+
+  @media ${device.tablet} {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 0 10px;
+    align-items: center;
+    height: 100%;
+  }
 `;
 
 export const Styled = {

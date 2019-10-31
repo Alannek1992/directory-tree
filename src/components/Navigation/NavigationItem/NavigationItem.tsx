@@ -1,10 +1,8 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWindowClose } from "@fortawesome/free-regular-svg-icons";
 
 import { Styled } from "./NavigationItem.style";
 import { NavigationItemType } from "../../../shared/globalTypes";
-import NavigationItemNameManager from "./NavigationItemNameManager/NavigationItemNameManager";
+import NavigationItemControls from "./NavigationItemControls/NavigationItemControls";
 
 interface INavigationItemProps {
   isActive: boolean;
@@ -14,28 +12,23 @@ interface INavigationItemProps {
   setActive: () => void;
 }
 
-const NavigationItem: React.FC<INavigationItemProps> = ({
-  isActive,
-  name,
-  navigationItemType,
-  close,
-  setActive
-}) => {
-  const navigationItem = (
-    <Styled.NavigationItem onClick={setActive} active={isActive}>
-      {navigationItemType === NavigationItemType.APP_INSTANCE ? (
-        <NavigationItemNameManager isActive={isActive} />
-      ) : (
-        <Styled.NavigationItemText>{name}</Styled.NavigationItemText>
-      )}
+type Ref = HTMLLIElement;
 
-      <Styled.NavigationItemIconClose onClick={close}>
-        <FontAwesomeIcon icon={faWindowClose} />
-      </Styled.NavigationItemIconClose>
-    </Styled.NavigationItem>
-  );
+const NavigationItem = React.forwardRef<Ref, INavigationItemProps>(
+  ({ isActive, name, navigationItemType, close, setActive }, ref) => {
+    const navigationItem = (
+      <Styled.NavigationItem onClick={setActive} active={isActive} ref={ref}>
+          <NavigationItemControls
+            isActive={isActive}
+            name={name}
+            navigationItemType={navigationItemType}
+            close={close}
+          />
+      </Styled.NavigationItem>
+    );
 
-  return navigationItem;
-};
+    return navigationItem;
+  }
+);
 
 export default NavigationItem;

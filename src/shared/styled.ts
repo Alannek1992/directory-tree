@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
-export const StyledNavigationMenu = styled.div`
+export const StyledNavigationMenu = styled.ul`
   display: flex;
   height: 100%;
   flex-wrap: nowrap;
   overflow-x: hidden;
-  width: 90%;
+  max-width: 80%;
   align-items: center;
+  margin: 0;
+  padding: 0;
 `;
 
 export const ManipulateTreeButton = styled.button`

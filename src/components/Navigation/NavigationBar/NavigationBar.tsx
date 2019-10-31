@@ -4,34 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Styled } from "./NavigationBar.style";
 import { StyledNavigationMenu } from "../../../shared/styled";
-import { isOverflown, scrollLeft } from "../../../shared/utilityy";
+import { scrollLeft } from "../../../shared/utilityy";
 import { SlideDirection } from "../../../shared/globalTypes";
-import { usePrevious } from "../../../shared/hooks";
+import { useIsOverflow } from "../../../shared/hooks";
 
 const NavigationBar: React.FC = props => {
-  const [overflow, setOverflow] = useState(false);
-  const scrollContainer = useRef<HTMLDivElement>(null);
-  const cachedLenghtOfElements: number | undefined = usePrevious(
-    scrollContainer.current
-      ? scrollContainer.current.children.length
-      : undefined
-  );
-
-  useEffect(() => {
-    if (scrollContainer.current) {
-      const overflown = isOverflown(scrollContainer.current);
-      if (overflown !== overflow) {
-        setOverflow(overflown);
-      }
-      if (
-        overflown &&
-        cachedLenghtOfElements &&
-        scrollContainer.current.children.length > cachedLenghtOfElements
-      ) {
-        slideHandler(SlideDirection.RIGHT);
-      }
-    }
-  });
+  const scrollContainer = useRef<HTMLUListElement>(null);
+  const overflow = useIsOverflow<HTMLElement>(scrollContainer.current);
 
   const slideHandler = (direction: string) => {
     if (scrollContainer.current) {
@@ -42,6 +21,8 @@ const NavigationBar: React.FC = props => {
       }
     }
   };
+
+  console.log("RENDERING FROM NAVIGATION BAR");
 
   return (
     <Fragment>

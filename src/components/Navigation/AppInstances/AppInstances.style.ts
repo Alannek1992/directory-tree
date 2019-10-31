@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const AppInstanceNew = styled.div`
+const AppInstanceNew = styled.li`
   box-sizing: border-box;
   border: 2px solid #ffa500;
   background: white;
