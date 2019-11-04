@@ -92,12 +92,14 @@ export const recursiveLoadNodes = async nodes => {
             nodesToStore = [...nodesToStore, ...fetchedNodes, ...nestedNodes];
           }
         } catch (error) {
-          throw(error);
+          throw error;
         }
       }
     }
 
     return nodesToStore;
+
+    
   }
 
   const filteredNodes = nodes.filter(node => {
@@ -109,7 +111,7 @@ export const recursiveLoadNodes = async nodes => {
     );
   });
 
-  const fetchedNodes = await recursivelyFetchNodes(filteredNodes);
+  const fetchedNodes = recursivelyFetchNodes(filteredNodes);
 
   return fetchedNodes;
 };

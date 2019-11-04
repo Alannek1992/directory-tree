@@ -6,6 +6,7 @@ export const StyledNavigationMenu = styled.ul`
   flex-wrap: nowrap;
   overflow-x: hidden;
   max-width: 80%;
+  width: 80%;
   align-items: center;
   margin: 0;
   padding: 0;
