@@ -126,7 +126,8 @@ const closeFile = (
     );
 
     if (activeAppInstance.openFiles.length > 0) {
-      activeAppInstance.activeFile = activeAppInstance.openFiles[0].id;
+      activeAppInstance.activeFile =
+        activeAppInstance.openFiles[activeAppInstance.openFiles.length - 1].id;
     } else {
       activeAppInstance.activeFile = "";
     }

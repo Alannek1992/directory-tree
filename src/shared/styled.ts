@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
 export const StyledNavigationMenu = styled.ul`
-  display: flex;
-  height: 100%;
-  flex-wrap: nowrap;
-  overflow-x: hidden;
-  max-width: 80%;
-  width: 80%;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-`;
+         display: flex;
+         height: 100%;
+         flex-wrap: nowrap;
+         overflow-x: hidden;
+         max-width: 80%;
+         align-items: center;
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+       `;
 
 export const ManipulateTreeButton = styled.button`
   border-radius: 5px;

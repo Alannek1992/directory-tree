@@ -1,6 +1,10 @@
 import { createSelector } from "reselect";
 
-import { IAppInstanceForToolbarDataStructure, IApplicationState } from "../../shared/globalTypes";
+import {
+  IAppInstanceForToolbarDataStructure,
+  IApplicationState,
+  IFileItem
+} from "../../shared/globalTypes";
 import { IAppInstanceState } from "../reducers/appInstance";
 
 const getAppInstances = ({ appInstances }: IAppInstanceState) => appInstances;
@@ -67,9 +71,15 @@ export const displayPopUpDrawer = createSelector(
 export const getOpenFilesForCurrentInstance = createSelector(
   [getOpenedFiles, getDownloadedFiles],
   (openedFiles, downloadedFiles) => {
-    const openedFilesToDisplay = downloadedFiles.filter(downloadedFile =>
-      openedFiles.some(openedFile => openedFile.id === downloadedFile.id)
-    );
+    const openedFilesToDisplay: IFileItem[] = [];
+    openedFiles.forEach(openedFile => {
+      const file = downloadedFiles.find(
+        downloadedFile => openedFile.id === downloadedFile.id
+      );
+      if (file) {
+        openedFilesToDisplay.push(file);
+      }
+    });
 
     return openedFilesToDisplay;
   }

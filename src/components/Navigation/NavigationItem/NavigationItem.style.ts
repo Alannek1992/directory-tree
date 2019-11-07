@@ -6,7 +6,7 @@ interface INavigationItemProps {
 
 const NavigationItem = styled.li<INavigationItemProps>`
   margin: 0 5px;
-  box-sizing: border-box;
+  
   display: flex;
   justify-content: space-between;
   height: 80%;

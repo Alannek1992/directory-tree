@@ -30,6 +30,7 @@ const PreviewViewerHeader = styled.div`
   align-items: center;
   box-sizing: border-box;
   border-bottom: 2px solid #ffa500;
+  padding: 0 20px;
 `;
 
 const PreviewViewerText = styled.p`

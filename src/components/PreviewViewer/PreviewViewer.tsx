@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import uniqid from "uniqid";
 
 import { Styled } from "./PreviewViewer.style";
 import {
@@ -13,10 +14,12 @@ import {
   IApplicationState
 } from "../../shared/globalTypes";
 import NavigationItem from "../Navigation/NavigationItem/NavigationItem";
-import { StyledNavigationMenu as Files } from "../../shared/styled";
 import { AppInstanceActionTypes } from "../../store/actions/appInstanceActions";
 import { getActiveFile } from "../../shared/utility";
 import { closeFile, setFileActive } from "../../store/actions/appInstance";
+import NavigationBar from "../Navigation/NavigationBar/NavigationBar";
+import { getRefsForNav } from "../../shared/utilityy";
+import { useAfterNavItemAdded } from "../../shared/hooks";
 
 interface IStateToProps {
   files: IFileItem[];
@@ -36,6 +39,8 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({
   closeFile,
   setFileActive
 }) => {
+  const myNavRefs = getRefsForNav(files);
+  useAfterNavItemAdded(files, myNavRefs);
   console.log("RENDERING PREVIEW VIEWER");
 
   const closeFileHandler = (
@@ -47,6 +52,12 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({
   };
 
   const setFileActiveHandler = (id: string) => {
+    const myRef = myNavRefs[id].current;
+    myRef &&
+      myRef.scrollIntoView({
+        behavior: "smooth",
+        inline: "end"
+      });
     setFileActive(id);
   };
 
@@ -54,22 +65,25 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({
 
   let content: JSX.Element | null = null;
 
+  console.log(files);
+
   if (activeFile) {
     content = (
       <Styled.PreviewViewer>
         <Styled.PreviewViewerHeader>
-          <Files>
+          <NavigationBar display>
             {files.map(file => (
               <NavigationItem
+                ref={myNavRefs[file.id]}
                 isActive={file.id === activeFileId}
                 navigationItemType={NavigationItemType.FILE_INSTANCE}
-                key={file.id}
+                key={uniqid()}
                 name={file.name}
                 close={event => closeFileHandler(event, file.id)}
                 setActive={() => setFileActiveHandler(file.id)}
               />
             ))}
-          </Files>
+          </NavigationBar>
         </Styled.PreviewViewerHeader>
         <Styled.PreviewViewerText>{activeFile.text}</Styled.PreviewViewerText>
       </Styled.PreviewViewer>

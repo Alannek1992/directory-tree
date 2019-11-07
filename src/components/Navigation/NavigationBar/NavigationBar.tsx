@@ -1,16 +1,29 @@
 import React, { Fragment, useRef } from "react";
-import { faLessThan, faGreaterThan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLessThan,
+  faGreaterThan,
+  faPlus
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Styled } from "./NavigationBar.style";
 import { StyledNavigationMenu } from "../../../shared/styled";
 import { scrollLeft } from "../../../shared/utilityy";
 import { SlideDirection } from "../../../shared/globalTypes";
-import { useIsOverflow } from "../../../shared/hooks";
+import { useIsOverflow} from "../../../shared/hooks";
 
-const NavigationBar: React.FC = props => {
+interface INavigationBarProps {
+  addNewItemHandler?: () => void;
+  display: boolean;
+}
+
+const NavigationBar: React.FC<INavigationBarProps> = ({
+  children,
+  addNewItemHandler,
+  display
+}) => {
   const scrollContainer = useRef<HTMLUListElement>(null);
-  const overflow = useIsOverflow<HTMLElement>(scrollContainer.current);
+  const [overflow, scrollLeftMax, scrollRightMax] = useIsOverflow<HTMLElement>(scrollContainer.current);
 
   const slideHandler = (direction: string) => {
     if (scrollContainer.current) {
@@ -24,29 +37,35 @@ const NavigationBar: React.FC = props => {
 
   console.log("RENDERING FROM NAVIGATION BAR");
 
-  return (
+  return display ? (
     <Fragment>
+      {display}
       {overflow ? (
-        <Styled.AppInstanceNavigationIcon
+        <Styled.NavigationIcon
           onClick={() => slideHandler(SlideDirection.LEFT)}
+          active={!scrollLeftMax}
         >
-          <FontAwesomeIcon icon={faLessThan} />
-        </Styled.AppInstanceNavigationIcon>
+          <FontAwesomeIcon icon={faLessThan}  />
+        </Styled.NavigationIcon>
       ) : null}
-
       <StyledNavigationMenu ref={scrollContainer}>
-        {props.children}
+        {children}
       </StyledNavigationMenu>
-
+      {addNewItemHandler ? (
+        <Styled.CreateNewItem onClick={addNewItemHandler}>
+          <FontAwesomeIcon icon={faPlus} />
+        </Styled.CreateNewItem>
+      ) : null}
       {overflow ? (
-        <Styled.AppInstanceNavigationIcon
+        <Styled.NavigationIcon
           onClick={() => slideHandler(SlideDirection.RIGHT)}
+          active={!scrollRightMax}
         >
           <FontAwesomeIcon icon={faGreaterThan} />
-        </Styled.AppInstanceNavigationIcon>
+        </Styled.NavigationIcon>
       ) : null}
     </Fragment>
-  );
+  ) : null;
 };
 
 export default NavigationBar;
