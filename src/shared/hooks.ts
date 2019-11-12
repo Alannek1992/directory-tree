@@ -63,27 +63,34 @@ export const useIsOverflow = <T extends HTMLElement>(element: T | null) => {
   return [isOverflow, isScrollLeftMax, isScrollRightMax];
 };
 
-export const useAfterNavItemAdded: <
-  T extends IAppInstanceForToolbarDataStructure | IFileItem
->(
+export const useAfterNavItemAdded: <T extends
+  | IAppInstanceForToolbarDataStructure
+  | IFileItem>(
   items: T[],
-  refs: IObjectWithProperties<React.RefObject<HTMLLIElement>>
-) => void = (items, refs) => {
+  refs: IObjectWithProperties<React.RefObject<HTMLLIElement>>,
+  refToScroll?: HTMLDivElement | null
+) => void = (items, refs, refToScroll) => {
   const previousCountOfItems = usePrevious(items.length);
-  console.log(previousCountOfItems);
-  console.log(items.length);
 
   useEffect(() => {
+    const element = document.getElementById("previewHeader");
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        inline: "end"
+      });
+    }
     if (
       previousCountOfItems !== undefined &&
       previousCountOfItems < items.length
     ) {
       const navRef = refs[items[items.length - 1].id].current;
-      navRef &&
+      if (navRef) {
         navRef.scrollIntoView({
           behavior: "smooth",
           inline: "end"
         });
+      }
     }
-  }, [items, refs, previousCountOfItems]);
+  }, [items, refs, previousCountOfItems, refToScroll]);
 };

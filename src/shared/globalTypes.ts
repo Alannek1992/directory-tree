@@ -20,6 +20,7 @@ export interface IDirectoryItemDataStructure {
 
 export interface IAppInstanceDataStructure {
   id: string;
+  name: string;
   openFiles: IOpenFileItem[];
   openNodes: string[];
   activeFile: string;
@@ -27,6 +28,7 @@ export interface IAppInstanceDataStructure {
 
 export interface IAppInstanceForToolbarDataStructure {
   id: string;
+  name: string;
   active: boolean;
 }
 

@@ -6,7 +6,8 @@ import {
   IOpenFile,
   ICloseFile,
   ISetFileActive,
-  ICacheOpenNodes
+  ICacheOpenNodes,
+  IChangeNameAppInstance
 } from "./appInstanceActions";
 
 export const createNewAppInstance = (): ICreateNewAppInstance => {
@@ -19,6 +20,17 @@ export const deleteAppInstance = (id: string): IDeleteAppInstance => {
   return {
     type: actionTypes.DELETE_APP_INSTANCE,
     id: id
+  };
+};
+
+export const changeNameAppInstance = (
+  id: string,
+  name: string
+): IChangeNameAppInstance => {
+  return {
+    type: actionTypes.CHANGE_NAME_APP_INSTANCE,
+    id: id,
+    name: name
   };
 };
 

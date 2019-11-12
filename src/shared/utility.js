@@ -49,6 +49,7 @@ export const adjustArray = (arrayOfItems, parentid) => {
 export const generateNewAppInstance = () => {
   return {
     id: uniqid(),
+    name: "New Card",
     openFiles: [],
     openNodes: [],
     activeFile: ""

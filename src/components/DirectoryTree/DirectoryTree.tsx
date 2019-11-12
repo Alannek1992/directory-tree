@@ -89,7 +89,6 @@ const DirectoryTree: React.FC<DirectoryTreeProps> = ({
     }
   }, [treeData]);
 
-
   const initNodeHandler = (parentId: string) => {
     loadNewNode(parentId);
   };
@@ -197,6 +196,7 @@ const mapDispatchToProps = (dispatch: Dispatch<GlobalActionTypes>) => {
     addNewInstance: () => dispatch(createNewAppInstance())
   };
 };
+
 
 export default connect(
   mapStateToProps,

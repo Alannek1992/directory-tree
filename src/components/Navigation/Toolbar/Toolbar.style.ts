@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { device } from "../../../shared/device";
+import { device, DeviceRequirements } from "../../../shared/device";
+
 
 const Toolbar = styled.header`
   height: 56px;
@@ -20,7 +21,7 @@ const Toolbar = styled.header`
 const ToolbarNav = styled.nav`
   display: none;
 
-  @media ${device.tablet} {
+  @media ${device(DeviceRequirements.MIN_WIDTH).tablet} {
     width: 100%;
     display: flex;
     flex-wrap: nowrap;

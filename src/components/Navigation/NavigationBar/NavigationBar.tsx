@@ -10,10 +10,10 @@ import { Styled } from "./NavigationBar.style";
 import { StyledNavigationMenu } from "../../../shared/styled";
 import { scrollLeft } from "../../../shared/utilityy";
 import { SlideDirection } from "../../../shared/globalTypes";
-import { useIsOverflow} from "../../../shared/hooks";
+import { useIsOverflow } from "../../../shared/hooks";
 
 interface INavigationBarProps {
-  addNewItemHandler?: () => void;
+  addNewItemHandler?: (event: React.MouseEvent<HTMLLIElement>) => void;
   display: boolean;
 }
 
@@ -23,7 +23,9 @@ const NavigationBar: React.FC<INavigationBarProps> = ({
   display
 }) => {
   const scrollContainer = useRef<HTMLUListElement>(null);
-  const [overflow, scrollLeftMax, scrollRightMax] = useIsOverflow<HTMLElement>(scrollContainer.current);
+  const [overflow, scrollLeftMax, scrollRightMax] = useIsOverflow<HTMLElement>(
+    scrollContainer.current
+  );
 
   const slideHandler = (direction: string) => {
     if (scrollContainer.current) {
@@ -45,17 +47,12 @@ const NavigationBar: React.FC<INavigationBarProps> = ({
           onClick={() => slideHandler(SlideDirection.LEFT)}
           active={!scrollLeftMax}
         >
-          <FontAwesomeIcon icon={faLessThan}  />
+          <FontAwesomeIcon icon={faLessThan} />
         </Styled.NavigationIcon>
       ) : null}
       <StyledNavigationMenu ref={scrollContainer}>
         {children}
       </StyledNavigationMenu>
-      {addNewItemHandler ? (
-        <Styled.CreateNewItem onClick={addNewItemHandler}>
-          <FontAwesomeIcon icon={faPlus} />
-        </Styled.CreateNewItem>
-      ) : null}
       {overflow ? (
         <Styled.NavigationIcon
           onClick={() => slideHandler(SlideDirection.RIGHT)}
@@ -63,6 +60,11 @@ const NavigationBar: React.FC<INavigationBarProps> = ({
         >
           <FontAwesomeIcon icon={faGreaterThan} />
         </Styled.NavigationIcon>
+      ) : null}
+      {addNewItemHandler ? (
+        <Styled.CreateNewItem onClick={addNewItemHandler}>
+          <FontAwesomeIcon icon={faPlus} />
+        </Styled.CreateNewItem>
       ) : null}
     </Fragment>
   ) : null;

@@ -9,6 +9,12 @@ export interface IDeleteAppInstance {
   id: string;
 }
 
+export interface IChangeNameAppInstance {
+  type: typeof actionTypes.CHANGE_NAME_APP_INSTANCE;
+  id: string;
+  name: string;
+}
+
 export interface ISetActiveAppInstance {
   type: typeof actionTypes.SET_ACTIVE_APP_INSTANCE;
   id: string;
@@ -38,6 +44,7 @@ export interface ICacheOpenNodes {
 export type AppInstanceActionTypes =
   | ICreateNewAppInstance
   | IDeleteAppInstance
+  | IChangeNameAppInstance
   | ISetActiveAppInstance
   | IOpenFile
   | ICloseFile

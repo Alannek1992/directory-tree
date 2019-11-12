@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import uniqid from "uniqid";
@@ -20,6 +20,8 @@ import { closeFile, setFileActive } from "../../store/actions/appInstance";
 import NavigationBar from "../Navigation/NavigationBar/NavigationBar";
 import { getRefsForNav } from "../../shared/utilityy";
 import { useAfterNavItemAdded } from "../../shared/hooks";
+import PopUpDrawer from "../UI/PopUpDrawer/PopUpDrawer";
+import ToggleDrawer from "../UI/ToggleDrawer/ToggleDrawer";
 
 interface IStateToProps {
   files: IFileItem[];
@@ -39,15 +41,22 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({
   closeFile,
   setFileActive
 }) => {
+  const [displayPopUp, setDisplayPopUp] = useState(false);
   const myNavRefs = getRefsForNav(files);
-  useAfterNavItemAdded(files, myNavRefs);
+  const myNavHeaderRef = useRef<HTMLDivElement>(null);
+  useAfterNavItemAdded(files, myNavRefs, myNavHeaderRef.current);
   console.log("RENDERING PREVIEW VIEWER");
+  console.log("MY NAV HEADER");
+  console.log(myNavHeaderRef);
 
   const closeFileHandler = (
     event: React.MouseEvent<HTMLDivElement>,
     id: string
   ) => {
     closeFile(id);
+    if (files.length === 1) {
+      setDisplayPopUp(false);
+    }
     event.stopPropagation();
   };
 
@@ -61,30 +70,46 @@ const PreviewViewer: React.FC<PreviewViewerProps> = ({
     setFileActive(id);
   };
 
+  const displayPopUpToggleHandler = () => {
+    setDisplayPopUp(!displayPopUp);
+  };
+
+  const displayPopUpCloseHandler = () => {
+    setDisplayPopUp(false);
+  };
+
   const activeFile = getActiveFile(files, activeFileId);
 
   let content: JSX.Element | null = null;
 
-  console.log(files);
+  const fileItemsNavigation = (
+    <NavigationBar display>
+      {files.map(file => (
+        <NavigationItem
+          ref={myNavRefs[file.id]}
+          isActive={file.id === activeFileId}
+          navigationItemType={NavigationItemType.FILE_INSTANCE}
+          key={uniqid()}
+          name={file.name}
+          close={event => closeFileHandler(event, file.id)}
+          setActive={() => setFileActiveHandler(file.id)}
+        />
+      ))}
+    </NavigationBar>
+  );
 
   if (activeFile) {
     content = (
       <Styled.PreviewViewer>
-        <Styled.PreviewViewerHeader>
-          <NavigationBar display>
-            {files.map(file => (
-              <NavigationItem
-                ref={myNavRefs[file.id]}
-                isActive={file.id === activeFileId}
-                navigationItemType={NavigationItemType.FILE_INSTANCE}
-                key={uniqid()}
-                name={file.name}
-                close={event => closeFileHandler(event, file.id)}
-                setActive={() => setFileActiveHandler(file.id)}
-              />
-            ))}
-          </NavigationBar>
+        <Styled.PreviewViewerHeader ref={myNavHeaderRef} id="previewHeader">
+          <ToggleDrawer toggle={displayPopUpToggleHandler} />
+          <Styled.NavigationContainer>
+            {fileItemsNavigation}
+          </Styled.NavigationContainer>
         </Styled.PreviewViewerHeader>
+        <PopUpDrawer show={displayPopUp} click={displayPopUpCloseHandler}>
+          {fileItemsNavigation}
+        </PopUpDrawer>
         <Styled.PreviewViewerText>{activeFile.text}</Styled.PreviewViewerText>
       </Styled.PreviewViewer>
     );

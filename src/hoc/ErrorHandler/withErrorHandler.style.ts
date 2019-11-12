@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { device } from "../../shared/device";
+import { device, DeviceRequirements } from "../../shared/device";
 
 const ModalDialogContainer = styled.div`
   background-color: white;
@@ -9,7 +9,7 @@ const ModalDialogContainer = styled.div`
   box-sizing: border-box;
   margin: 0.5rem;
 
-  @media ${device.laptop} {
+  @media ${device(DeviceRequirements.MIN_WIDTH).laptop} {
     max-width: 500px;
     margin: 1.75rem auto;
   }

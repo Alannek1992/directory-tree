@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { device, DeviceRequirements } from "./device";
 
 export const StyledNavigationMenu = styled.ul`
          display: flex;
@@ -10,6 +11,13 @@ export const StyledNavigationMenu = styled.ul`
          margin: 0;
          padding: 0;
          box-sizing: border-box;
+         flex-flow: row;
+
+         @media ${device(DeviceRequirements.MAX_WIDTH).tablet} {
+           flex-flow: column;
+           margin: 0 auto;
+           max-height: 400px;
+         }
        `;
 
 export const ManipulateTreeButton = styled.button`

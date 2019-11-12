@@ -54,7 +54,8 @@ export const getAllAppInstances = createSelector(
       (appInstance): IAppInstanceForToolbarDataStructure => {
         return {
           id: appInstance.id,
-          active: appInstance.id === activeInstance
+          active: appInstance.id === activeInstance,
+          name: appInstance.name
         };
       }
     );

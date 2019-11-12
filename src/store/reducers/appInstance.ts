@@ -9,7 +9,8 @@ import {
   IOpenFile,
   ICloseFile,
   ISetFileActive,
-  ICacheOpenNodes
+  ICacheOpenNodes,
+  IChangeNameAppInstance
 } from "../actions/appInstanceActions";
 import {
   updateObject,
@@ -78,6 +79,24 @@ const deleteAppInstance = (
           : ""
         : state.activeInstanceId
   });
+};
+
+const changeNameAppInstance = (
+  state: IAppInstanceState,
+  action: IChangeNameAppInstance
+): IAppInstanceState => {
+  //implementation is pretty bad. Need to find a way to not re-render almost everything ..
+  const appInstances = state.appInstances.map(appInst => {
+    if (appInst.id === action.id) {
+      return updateObject(appInst, {
+        name: action.name
+      });
+    } else {
+      return appInst;
+    }
+  });
+
+  return updateObject(state, { appInstances: appInstances });
 };
 
 const setActiveAppInstance = (
@@ -161,6 +180,8 @@ const appInstanceReducer = (
       return createNewAppInstance(state);
     case actionTypes.DELETE_APP_INSTANCE:
       return deleteAppInstance(state, action as IDeleteAppInstance);
+    case actionTypes.CHANGE_NAME_APP_INSTANCE:
+      return changeNameAppInstance(state, action as IChangeNameAppInstance);
     case actionTypes.SET_ACTIVE_APP_INSTANCE:
       return setActiveAppInstance(state, action as ISetActiveAppInstance);
     case actionTypes.OPEN_FILE:

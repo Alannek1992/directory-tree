@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
 
@@ -13,7 +13,8 @@ import { getAllAppInstances } from "../../../store/selectors";
 import {
   createNewAppInstance,
   deleteAppInstance,
-  setActiveAppInstance
+  setActiveAppInstance,
+  changeNameAppInstance
 } from "../../../store/actions/appInstance";
 import { AppInstanceActionTypes } from "../../../store/actions/appInstanceActions";
 import NavigationBar from "../NavigationBar/NavigationBar";
@@ -28,6 +29,7 @@ interface IDispatchToProps {
   addNewInstance: () => void;
   deleteInstance: (id: string) => void;
   setInstanceActive: (id: string) => void;
+  changeNameOfAppInstance: (id: string, name: string) => void;
 }
 
 type AppInstancesProps = IMapStateToProps & IDispatchToProps;
@@ -36,16 +38,24 @@ const AppInstances: React.FC<AppInstancesProps> = ({
   appInstances,
   addNewInstance,
   deleteInstance,
-  setInstanceActive
+  setInstanceActive,
+  changeNameOfAppInstance
 }) => {
   const myNavRefs = getRefsForNav(appInstances);
   useAfterNavItemAdded(appInstances, myNavRefs);
 
-  const createNewAppInstance = (): void => {
+  useEffect(() => {
+    console.log("COMPONENT DID MOUNT with key: ");
+  }, []);
+
+  const createNewAppInstanceHandler = (
+    event: React.MouseEvent<HTMLLIElement>
+  ): void => {
     addNewInstance();
+    event.stopPropagation();
   };
 
-  const deleteAppInstance = (
+  const deleteAppInstanceHandler = (
     event: React.MouseEvent<HTMLDivElement>,
     id: string
   ): void => {
@@ -53,7 +63,18 @@ const AppInstances: React.FC<AppInstancesProps> = ({
     event.stopPropagation();
   };
 
-  const setAppInstanceActive = (id: string): void => {
+  const changeNameOfAppInstanceHandler = (id: string) => {
+    console.log("Hello");
+    return (name: string) => {
+      console.log("INNER");
+      changeNameOfAppInstance(id, name);
+    };
+  };
+
+  const setAppInstanceActiveHandler = (
+    event: React.MouseEvent<HTMLLIElement>,
+    id: string
+  ): void => {
     const myRef = myNavRefs[id];
     myRef.current &&
       myRef.current.scrollIntoView({
@@ -62,20 +83,28 @@ const AppInstances: React.FC<AppInstancesProps> = ({
       });
 
     setInstanceActive(id);
+    event.stopPropagation();
   };
 
   console.log("RENDERING NAVIGATION");
 
   return (
-    <NavigationBar addNewItemHandler={createNewAppInstance} display={appInstances.length > 0}>
+    <NavigationBar
+      addNewItemHandler={createNewAppInstanceHandler}
+      display={appInstances.length > 0}
+    >
       {appInstances.map(appInstance => (
         <NavigationItem
           key={appInstance.id}
+          name={appInstance.name}
           isActive={appInstance.active}
           ref={myNavRefs[appInstance.id]}
           navigationItemType={NavigationItemType.APP_INSTANCE}
-          close={event => deleteAppInstance(event, appInstance.id)}
-          setActive={() => setAppInstanceActive(appInstance.id)}
+          close={event => deleteAppInstanceHandler(event, appInstance.id)}
+          setActive={event =>
+            setAppInstanceActiveHandler(event, appInstance.id)
+          }
+          changeName={() => changeNameOfAppInstanceHandler(appInstance.id)}
         />
       ))}
     </NavigationBar>
@@ -92,11 +121,10 @@ const mapDispatchToProps = (dispatch: Dispatch<AppInstanceActionTypes>) => {
   return {
     addNewInstance: () => dispatch(createNewAppInstance()),
     deleteInstance: (id: string) => dispatch(deleteAppInstance(id)),
-    setInstanceActive: (id: string) => dispatch(setActiveAppInstance(id))
+    setInstanceActive: (id: string) => dispatch(setActiveAppInstance(id)),
+    changeNameOfAppInstance: (id: string, name: string) =>
+      dispatch(changeNameAppInstance(id, name))
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppInstances);
+export default connect(mapStateToProps, mapDispatchToProps)(AppInstances);

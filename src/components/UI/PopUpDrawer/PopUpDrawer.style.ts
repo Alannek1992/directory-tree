@@ -9,13 +9,14 @@ const PopUpDrawer = styled.div`
   z-index: 1000;
   background: rgba(35, 35, 53, 0.95);
   cursor: pointer;
+  display: flex;
+  align-items: center;
 `;
 
 const PopUpDrawerInnerContainer = styled.div`
-  position: absolute;
-  top: 40%;
   width: 100%;
   text-align: center;
+  overflow: auto;
 `;
 
 export const Styled = {

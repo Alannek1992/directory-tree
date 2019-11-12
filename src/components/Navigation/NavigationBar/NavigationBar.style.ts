@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { device, DeviceRequirements } from "../../../shared/device";
 
 interface INavigationIconProps {
   active: boolean;
@@ -10,6 +11,11 @@ const NavigationIcon = styled.div<INavigationIconProps>`
   border: 2px solid #ffa500;
   border-radius: 10px;
   background: white;
+
+  @media ${device(DeviceRequirements.MAX_WIDTH).tablet} {
+    display: none;
+  }
+
   :hover {
     color: white;
     background: black;
@@ -36,6 +42,13 @@ const CreateNewItem = styled.li`
   width: auto;
   padding: 11px;
 
+  @media ${device(DeviceRequirements.MAX_WIDTH).tablet} {
+    width: 20%;
+    margin: 40px auto;
+    display: flex;
+    justify-content: center;
+  }
+  
   &:hover {
     background: #474747;
     cursor: pointer;

@@ -14,7 +14,7 @@ const PopUpDrawer: React.FC<IPopUpDrawerProps> = ({
   children
 }) => {
   return (
-    <CSSTransition in={show} timeout={500} classNames="display" unmountOnExit>
+    <CSSTransition in={show} timeout={500} classNames="display" unmountOnExit >
       <Styled.PopUpDrawer onClick={click}>
         <Styled.PopUpDrawerInnerContainer>
           {children}

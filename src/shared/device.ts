@@ -4,8 +4,15 @@ const size = {
   desktop: "1200px"
 };
 
-export const device = {
-  tablet: `(min-width: ${size.tablet})`,
-  laptop: `(min-width: ${size.laptop})`,
-  desktop: `(min-width: ${size.desktop})`
-};
+export enum DeviceRequirements {
+  MIN_WIDTH = "MIN-WIDTH",
+  MAX_WIDTH = "MAX-WIDTH"
+}
+
+export const device = (requirement: DeviceRequirements) => {
+         return {
+           tablet: `(${requirement}: ${size.tablet})`,
+           laptop: `(${requirement}: ${size.laptop})`,
+           desktop: `(${requirement}: ${size.desktop})`
+         };
+       };

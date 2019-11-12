@@ -6,24 +6,25 @@ import NavigationItemControls from "./NavigationItemControls/NavigationItemContr
 
 interface INavigationItemProps {
   isActive: boolean;
-  name?: string;
+  name: string;
   navigationItemType: NavigationItemType;
   close: (event: React.MouseEvent<HTMLDivElement>) => void;
-  setActive: () => void;
+  setActive: (event: React.MouseEvent<HTMLLIElement>) => void;
+  changeName?: () => (name: string) => void;
 }
 
 type Ref = HTMLLIElement;
 
 const NavigationItem = React.forwardRef<Ref, INavigationItemProps>(
-  ({ isActive, name, navigationItemType, close, setActive }, ref) => {
+  ({ isActive, name, close, setActive, changeName }, ref) => {
     const navigationItem = (
       <Styled.NavigationItem onClick={setActive} active={isActive} ref={ref}>
-          <NavigationItemControls
-            isActive={isActive}
-            name={name}
-            navigationItemType={navigationItemType}
-            close={close}
-          />
+        <NavigationItemControls
+          isActive={isActive}
+          name={name}
+          changeName={changeName}
+          close={close}
+        />
       </Styled.NavigationItem>
     );
 

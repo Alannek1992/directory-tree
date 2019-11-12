@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Col } from "react-bootstrap";
-import { device } from "../../shared/device";
+import { device, DeviceRequirements } from "../../shared/device";
 
 const PreviewViewer = styled.div`
   border: 2px solid #ffa500;
@@ -11,7 +11,7 @@ const PreviewViewer = styled.div`
   border-radius: 5px;
   margin-bottom: 10%;
 
-  @media ${device.laptop} {
+  @media ${device(DeviceRequirements.MIN_WIDTH).laptop} {
     margin-bottom: 0;
   }
 `;
@@ -37,9 +37,23 @@ const PreviewViewerText = styled.p`
   padding: 10px;
 `;
 
+const NavigationContainer = styled.nav`
+  width: 100%;
+  display: flex;
+  height: 100%;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin: 0;
+  align-items: center;
+  @media ${device(DeviceRequirements.MAX_WIDTH).tablet} {
+    display: none;
+  }
+`;
+
 export const Styled = {
-  PreviewViewer,
-  StyledCol,
-  PreviewViewerHeader,
-  PreviewViewerText
-};
+         PreviewViewer,
+         StyledCol,
+         PreviewViewerHeader,
+         PreviewViewerText,
+         NavigationContainer
+       };

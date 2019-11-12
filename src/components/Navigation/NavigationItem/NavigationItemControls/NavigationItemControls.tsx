@@ -3,30 +3,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faWindowClose } from "@fortawesome/free-regular-svg-icons";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Styled } from "./NavigationItemControls.style";
-import { NavigationItemType } from "../../../../shared/globalTypes";
+
 
 interface INavigationItemNameManagerProps {
   isActive: boolean;
-  navigationItemType: NavigationItemType;
+  changeName?: () => (name: string) => void;
   close: (event: React.MouseEvent<HTMLDivElement>) => void;
-  name?: string;
+  name: string;
 }
 
 const NavigationItemNameManager: React.FC<INavigationItemNameManagerProps> = ({
   isActive,
-  navigationItemType,
+  changeName,
   close,
   name
 }) => {
   /*This could be called as an antipattern to use props in state, because hook useState runs only 
   once in the initial phase. But in our case we need the name from props only for initial value and therefore its fine to use it.*/
-  const [label, setLabel] = useState(name || "New Card");
-  const [inputName, setInputName] = useState(label);
+  const [inputName, setInputName] = useState(name);
   const [editing, setEditing] = useState(false);
 
-  const changeNameHandler = () => {
-    setLabel(inputName);
+  const changeNameHandler = (event: React.MouseEvent<HTMLDivElement>) => {
+    changeName && changeName()(inputName);
     setEditing(false);
+    event.stopPropagation();
   };
 
   const setInputChangeHandler = (
@@ -35,11 +35,12 @@ const NavigationItemNameManager: React.FC<INavigationItemNameManagerProps> = ({
     setInputName(event.target.value);
   };
 
-  const setEditingHandler = () => {
+  const setEditingHandler = (event: React.MouseEvent<HTMLDivElement>) => {
     if (editing) {
-      setInputName(label);
+      setInputName(name);
     }
     setEditing(!editing);
+    event.stopPropagation();
   };
 
   const selectTextHandler = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -51,10 +52,10 @@ const NavigationItemNameManager: React.FC<INavigationItemNameManagerProps> = ({
   let content = (
     <Fragment>
       <Styled.NavigatiomItemControlsText>
-        {label}
+        {name}
       </Styled.NavigatiomItemControlsText>
       <Styled.NavigationItemControlsIcons>
-        {navigationItemType === NavigationItemType.APP_INSTANCE && isActive ? (
+        {changeName && isActive ? (
           <Styled.NavigationItemControlsIcon
             onClick={editing ? changeNameHandler : setEditingHandler}
           >
