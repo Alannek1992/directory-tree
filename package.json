@@ -27,7 +27,7 @@
     "react-horizontal-scrolling-menu": "^0.7.3",
     "react-redux": "^7.1.0",
     "react-scripts": "3.0.1",
-    "react-simple-tree-menu": "^1.1.4",
+    "react-simple-tree-menu": "1.1.4",
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
     "redux-saga-thunk": "^0.7.3",
