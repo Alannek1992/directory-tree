@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import createSagaMiddleware from "redux-saga";
-import { middleware as thunkMiddleware } from "redux-saga-thunk";
 
 import App from "./App";
 import directoryTreeReducer from "./store/reducers/directoryTree";
@@ -27,7 +26,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunkMiddleware, sagaMiddleware))
+  composeEnhancers(applyMiddleware(sagaMiddleware))
 );
 
 sagaMiddleware.run(watchDirectoryTree);
